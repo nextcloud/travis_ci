@@ -16,7 +16,7 @@ echo "Work directory: $WORKDIR"
 echo "Database: $DB"
 cd ..
 git clone --depth 1 -b $CORE_BRANCH https://github.com/nextcloud/server
-cd core
+cd server
 git submodule update --init
 
 cd apps
@@ -54,7 +54,7 @@ fi
 #
 # copy install script
 #
-cd ../core
+cd ../server
 if [ ! -f core_install.sh ]; then
     wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/core_install.sh
 fi
