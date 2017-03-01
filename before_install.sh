@@ -25,10 +25,12 @@ cd $WORKDIR
 
 if [ "$DB" == "mysql" ] ; then
   echo "Setting up mysql ..."
-  mysql -e 'create database oc_autotest;'
-  mysql -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY 'owncloud'";
-  mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost'";
-  mysql -e "SELECT User FROM mysql.user;"
+  MYSQL_HOST=${MYSQL_HOST:-localhost}
+  MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-owncloud}
+  mysql -h $MYSQL_HOST -p$MYSQL_ROOT_PASSWORD -e 'create database oc_autotest;'
+  mysql -h $MYSQL_HOST -p$MYSQL_ROOT_PASSWORD -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY 'owncloud'";
+  mysql -h $MYSQL_HOST -p$MYSQL_ROOT_PASSWORD -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost'";
+  mysql -h $MYSQL_HOST -p$MYSQL_ROOT_PASSWORD -e "SELECT User FROM mysql.user;"
 fi
 
 if [ "$DB" == "pgsql" ] ; then

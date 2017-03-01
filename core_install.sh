@@ -38,6 +38,8 @@ fi
 # use tmpfs for datadir - should speedup unit test execution
 DATADIR=$BASEDIR/data-autotest
 
+MYSQL_HOST=${MYSQL_HOST:-localhost}
+
 echo "Using database $DATABASENAME"
 
 # create autoconfig for sqlite, mysql and postgresql
@@ -64,7 +66,7 @@ cat > ./tests/autoconfig-mysql.php <<DELIM
   'directory' => '$DATADIR',
   'dbuser' => '$DATABASEUSER',
   'dbname' => '$DATABASENAME',
-  'dbhost' => 'localhost',
+  'dbhost' => '$MYSQL_HOST',
   'dbpass' => 'owncloud',
 );
 DELIM
