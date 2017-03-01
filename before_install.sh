@@ -27,10 +27,10 @@ if [ "$DB" == "mysql" ] ; then
   echo "Setting up mysql ..."
   MYSQL_HOST=${MYSQL_HOST:-localhost}
   MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-owncloud}
-  mysql -h $MYSQL_HOST -p$MYSQL_ROOT_PASSWORD -e 'create database oc_autotest;'
-  mysql -h $MYSQL_HOST -p$MYSQL_ROOT_PASSWORD -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY 'owncloud'";
-  mysql -h $MYSQL_HOST -p$MYSQL_ROOT_PASSWORD -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost'";
-  mysql -h $MYSQL_HOST -p$MYSQL_ROOT_PASSWORD -e "SELECT User FROM mysql.user;"
+  mysql -h $MYSQL_HOST -u root -p$MYSQL_ROOT_PASSWORD -e 'create database oc_autotest;'
+  mysql -h $MYSQL_HOST -u root -p$MYSQL_ROOT_PASSWORD -e "CREATE USER 'oc_autotest'@'MYSQL_HOST' IDENTIFIED BY 'owncloud'";
+  mysql -h $MYSQL_HOST -p$MYSQL_ROOT_PASSWORD -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'$MYSQL_HOST'";
+  mysql -h $MYSQL_HOST -p$MYSQL_ROOT_PASSWORD -u root -e "SELECT User FROM mysql.user;"
 fi
 
 if [ "$DB" == "pgsql" ] ; then
@@ -39,7 +39,7 @@ fi
 
 if [ "$DB" == "oracle" ] ; then
   if [ ! -f before_install_oracle.sh ]; then
-    wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install_oracle.sh
+    wget https://raw.githubusercontent.com/nextcloud/travis_ci/use-mysql-host-env/before_install_oracle.sh
   fi
   bash ./before_install_oracle.sh
 fi
@@ -47,7 +47,7 @@ fi
 #
 # copy custom php.ini settings
 #
-wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/custom.ini
+wget https://raw.githubusercontent.com/nextcloud/travis_ci/use-mysql-host-env/custom.ini
 if [ $(phpenv version-name) != 'hhvm' ]; then
   phpenv config-add custom.ini
 fi
@@ -58,7 +58,7 @@ fi
 #
 cd ../server
 if [ ! -f core_install.sh ]; then
-    wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/core_install.sh
+    wget https://raw.githubusercontent.com/nextcloud/travis_ci/use-mysql-host-env/core_install.sh
 fi
 
 bash ./core_install.sh $DB
