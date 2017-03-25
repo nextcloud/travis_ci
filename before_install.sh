@@ -65,6 +65,6 @@ bash ./core_install.sh $DB
 # install phpunit 5.* for BC on php7
 #
 cd ..
-wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/composer.json
+wget https://raw.githubusercontent.com/nextcloud/travis_ci/fix-phpunit-on-php7/composer.json
 composer install
 cd $WORKDIR
