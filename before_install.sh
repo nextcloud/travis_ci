@@ -67,5 +67,5 @@ bash ./core_install.sh $DB
 cd ..
 wget https://raw.githubusercontent.com/nextcloud/travis_ci/fix-phpunit-on-php7/composer.json
 composer install
-ln -s vendor/bin/phpunit ~/bin/phpunit
+ln -s ~/bin/phpunit vendor/bin/phpunit
 cd $WORKDIR
