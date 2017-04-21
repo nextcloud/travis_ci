@@ -14,9 +14,9 @@ if [ "$TRAVIS_PHP_VERSION" == "7" ] ; then
 else
   mkdir /tmp/oci8
   cd /tmp/oci8
-  wget https://pecl.php.net/get/oci8-2.0.12.tgz
-  tar -xzf oci8-2.0.12.tgz
-  cd oci8-2.0.12
+  wget https://pecl.php.net/get/oci8-2.1.4.tgz
+  tar -xzf oci8-2.1.4.tgz
+  cd oci8-2.1.4
   phpize
   ORACLE_HOME=/usr/lib/oracle/11.2/client64
   ./configure
