@@ -36,6 +36,10 @@ if [ "$DB" == "pgsql" ] ; then
 fi
 
 if [ "$DB" == "oracle" ] ; then
+  DOCKER_CONTAINER_ID=$(docker run -d deepdiver/docker-oracle-xe-11g)
+  export DATABASEHOST=$(docker inspect --format="{{.NetworkSettings.IPAddress}}" "$DOCKER_CONTAINER_ID")
+
+  # TODO: wait for oracle
   if [ ! -f before_install_oracle.sh ]; then
     wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install_oracle.sh
   fi
@@ -49,7 +53,6 @@ wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/custom.ini
 if [ $(phpenv version-name) != 'hhvm' ]; then
   phpenv config-add custom.ini
 fi
-
 
 #
 # copy install script
