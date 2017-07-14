@@ -20,7 +20,7 @@ cd server
 git submodule update --init
 
 cd apps
-cp -R ../../$APP_NAME/ .
+cp -R $WORKDIR/ $APP_NAME
 cd $WORKDIR
 
 if [ "$DB" == "mysql" ] ; then
