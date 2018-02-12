@@ -10,6 +10,7 @@ set -e
 
 DATABASENAME=oc_autotest
 DATABASEUSER=oc_autotest
+[ -z "$DATABASEHOST" ] && DATABASEHOST="localhost"
 ADMINLOGIN=admin
 BASEDIR=$PWD
 
@@ -64,7 +65,7 @@ cat > ./tests/autoconfig-mysql.php <<DELIM
   'directory' => '$DATADIR',
   'dbuser' => '$DATABASEUSER',
   'dbname' => '$DATABASENAME',
-  'dbhost' => 'localhost',
+  'dbhost' => '$DATABASEHOST',
   'dbpass' => 'owncloud',
 );
 DELIM
@@ -80,7 +81,7 @@ cat > ./tests/autoconfig-pgsql.php <<DELIM
   'directory' => '$DATADIR',
   'dbuser' => '$DATABASEUSER',
   'dbname' => '$DATABASENAME',
-  'dbhost' => 'localhost',
+  'dbhost' => '$DATABASEHOST',
   'dbpass' => '',
 );
 DELIM
