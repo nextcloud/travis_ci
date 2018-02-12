@@ -24,15 +24,33 @@ cp -R $WORKDIR/ $APP_NAME
 cd $WORKDIR
 
 if [ "$DB" == "mysql" ] ; then
-  echo "Setting up mysql ..."
-  mysql -e 'create database oc_autotest;'
-  mysql -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY 'owncloud'";
-  mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost'";
-  mysql -e "SELECT User FROM mysql.user;"
+  if [ -z "$DATABASEHOST" ] || [ "$DATABASEHOST" = "localhost" ] ; then
+    echo "Setting up mysql ..."
+    mysql -e 'create database oc_autotest;'
+    mysql -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY 'owncloud'";
+    mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost'";
+    mysql -e "SELECT User FROM mysql.user;"
+  else
+    echo "Waiting for MySQL initialisation ..."
+    if ! ../server/apps/files_external/tests/env/wait-for-connection $DATABASEHOST 3306 600; then
+      echo "[ERROR] Waited 600 seconds, no response" >&2
+      exit 1
+    fi
+  fi
 fi
 
 if [ "$DB" == "pgsql" ] ; then
-  createuser -U travis -s oc_autotest
+  if [ -z "$DATABASEHOST" ] || [ "$DATABASEHOST" = "localhost" ] ; then
+    createuser -U travis -s oc_autotest
+  else
+    echo "Waiting for Postgres to be available ..."
+    if ! ../server/apps/files_external/tests/env/wait-for-connection $DATABASEHOST 5432 60; then
+      echo "[ERROR] Waited 60 seconds for $DATABASEHOST, no response" >&2
+      exit 1
+    fi
+    echo "Give it 10 additional seconds ..."
+    sleep 10
+  fi
 fi
 
 if [ "$DB" == "oracle" ] ; then
