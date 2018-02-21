@@ -83,10 +83,16 @@ fi
 bash ./core_install.sh $DB
 
 #
-# install phpunit 5.* for BC on php7
+# install fixed phpunit version
 #
 cd ..
-wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/composer.json
+
+if [ "$CORE_BRANCH" == "stable13" -o "$CORE_BRANCH" == "stable12" -o "$CORE_BRANCH" == "stable11" -o "$CORE_BRANCH" == "stable10" -o "$CORE_BRANCH" == "stable9" ]; then
+    wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/composer-phpunit5.json
+    mv composer-phpunit5.json composer.json
+else
+    wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/composer.json
+fi
 composer install
 export PATH="$PWD/vendor/bin:$PATH"
 cd $WORKDIR
