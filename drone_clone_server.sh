@@ -20,3 +20,4 @@ git submodule update --init
 cd apps
 cp -R $WORKDIR/ $APP_NAME
 cd $WORKDIR
+echo $PWD

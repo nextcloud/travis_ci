@@ -67,6 +67,8 @@ fi
 #
 # copy install script
 #
+echo $PWD
+ls -la ..
 cd ../server
 if [ ! -f core_install.sh ]; then
     wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/core_install.sh
