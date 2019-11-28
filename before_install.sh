@@ -90,8 +90,12 @@ cd ..
 if [ "$CORE_BRANCH" == "stable13" -o "$CORE_BRANCH" == "stable12" -o "$CORE_BRANCH" == "stable11" -o "$CORE_BRANCH" == "stable10" -o "$CORE_BRANCH" == "stable9" ]; then
     wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/composer-phpunit5.json
     mv composer-phpunit5.json composer.json
+elif [ "$CORE_BRANCH" == "stable17" -o "$CORE_BRANCH" == "stable16" -o "$CORE_BRANCH" == "stable15" -o "$CORE_BRANCH" == "stable14" ]; then
+    wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/composer-phpunit6.json
+    mv composer-phpunit6.json composer.json
 else
-    wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/composer.json
+    wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/composer-phpunit8.json
+    mv composer-phpunit8.json composer.json
 fi
 composer install
 export PATH="$PWD/vendor/bin:$PATH"
