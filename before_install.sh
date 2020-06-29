@@ -44,8 +44,8 @@ if [ "$DB" == "pgsql" ] ; then
     createuser -U travis -s oc_autotest
   else
     echo "Waiting for Postgres to be available ..."
-    if ! ../server/apps/files_external/tests/env/wait-for-connection $DATABASEHOST 5432 600; then
-      echo "[ERROR] Waited 600 seconds for $DATABASEHOST, no response" >&2
+    if ! ../server/apps/files_external/tests/env/wait-for-connection $DATABASEHOST 5432 60; then
+      echo "[ERROR] Waited 60 seconds for $DATABASEHOST, no response" >&2
       exit 1
     fi
     echo "Give it 10 additional seconds ..."
