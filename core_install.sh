@@ -122,9 +122,14 @@ function execute_tests {
 	# copy autoconfig
 	cp $BASEDIR/tests/autoconfig-$1.php $BASEDIR/config/autoconfig.php
 
+	# Check status
+	echo "STATUS"
+	php -f status.php
+	echo "END STATUS"
+
 	# trigger installation
 	echo "INDEX"
-	timeout 30 php -f index.php
+	timeout -s 0 5 php -f index.php
 	echo "END INDEX"
 
 	#test execution
