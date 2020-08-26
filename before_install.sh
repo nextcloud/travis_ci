@@ -77,7 +77,7 @@ fi
 #
 cd ../server
 if [ ! -f core_install.sh ]; then
-    wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/core_install.sh
+    wget https://raw.githubusercontent.com/nextcloud/travis_ci/timeout-for-oracel/core_install.sh
 fi
 
 bash ./core_install.sh $DB
