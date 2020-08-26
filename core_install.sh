@@ -124,7 +124,7 @@ function execute_tests {
 
 	# trigger installation
 	echo "INDEX"
-	php -f index.php
+	timeout 30 php -f index.php
 	echo "END INDEX"
 
 	#test execution
